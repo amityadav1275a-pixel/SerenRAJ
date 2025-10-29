@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useEffect } from 'react';
 import { Header } from './components/Header';
 import { DeviceSelector } from './components/DeviceSelector';
@@ -245,6 +246,7 @@ const App: React.FC = () => {
                     isImageLoading={isImageLoading}
                     imageError={imageError}
                     onClearImageError={() => setImageError(null)}
+                    savedBuilds={savedBuilds}
                 />
             </ErrorBoundary>
         );

@@ -21,6 +21,12 @@ export interface Customization {
   options: CustomizationOption[];
 }
 
+export interface PerformanceBenchmarks {
+  cpuScore: number;
+  gpuScore: number;
+  summary: string;
+}
+
 export interface CustomConfiguration {
   deviceType: DeviceType;
   deviceName: string;
@@ -30,6 +36,7 @@ export interface CustomConfiguration {
   customizations: Customization[];
   totalPrice: number;
   imageUrl?: string;
+  performanceBenchmarks: PerformanceBenchmarks;
 }
 
 export interface AdvisorCriteria {

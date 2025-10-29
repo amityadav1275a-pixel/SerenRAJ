@@ -42,8 +42,17 @@ const configResponseSchema = {
       },
     },
     totalPrice: { type: Type.NUMBER },
+    performanceBenchmarks: {
+      type: Type.OBJECT,
+      properties: {
+        cpuScore: { type: Type.NUMBER },
+        gpuScore: { type: Type.NUMBER },
+        summary: { type: Type.STRING },
+      },
+      required: ['cpuScore', 'gpuScore', 'summary'],
+    },
   },
-  required: ['deviceName', 'description', 'designDescription', 'basePrice', 'customizations', 'totalPrice'],
+  required: ['deviceName', 'description', 'designDescription', 'basePrice', 'customizations', 'totalPrice', 'performanceBenchmarks'],
 };
 
 const mainPromptTemplate = (userPrompt: string, deviceType: DeviceType) => `
@@ -90,6 +99,11 @@ const mainPromptTemplate = (userPrompt: string, deviceType: DeviceType) => `
     - Provide a 'price' modification from the base price (use 0 for the base selection).
     - Provide at least 5-7 diverse alternative 'options' (from budget to ultra-premium), each with its own 'selection', 'reason', and 'price'.
     - Ensure the initially selected item is also present in the options list.
+
+    After all components, you MUST also generate a 'performanceBenchmarks' object.
+    - 'cpuScore': An estimated score from 1-100, where 100 is bleeding-edge 2026 performance.
+    - 'gpuScore': An estimated score from 1-100, relative to top-tier 2026 GPUs. For phones with integrated graphics, this score will be much lower than for laptops with dedicated GPUs.
+    - 'summary': A brief, user-friendly paragraph explaining what these scores mean for real-world tasks. For example: "With a CPU score of 85, this machine will handle heavy multitasking and professional creative work with ease. The GPU score of 70 means it can run modern AAA games at 1440p on high settings smoothly."
 
     Finally, provide a creative 'deviceName', a compelling 'description' for the device, a detailed 'designDescription' combining the visual elements, a 'basePrice' in USD, and a 'totalPrice' in USD (basePrice + sum of selected option prices).
     Respond ONLY with the JSON object matching the provided schema. Do not include any other text or markdown formatting.

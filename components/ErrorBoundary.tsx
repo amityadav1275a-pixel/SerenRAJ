@@ -10,8 +10,8 @@ interface State {
 }
 
 export class ErrorBoundary extends Component<Props, State> {
-  // FIX: Switched from class property initialization to constructor-based setup
-  // to ensure 'this' context is correctly bound and to improve compatibility.
+  // FIX: Refactored to use a constructor for state initialization and method binding
+  // to resolve issues where 'this.props' and 'this.setState' were inaccessible.
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -29,8 +29,6 @@ export class ErrorBoundary extends Component<Props, State> {
     console.error("Uncaught error:", error, errorInfo);
   }
 
-  // FIX: Converted from an arrow function property to a standard class method,
-  // which is now bound in the constructor.
   private handleReset() {
     if (this.props.onReset) {
       this.props.onReset();
